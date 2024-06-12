@@ -13,8 +13,6 @@ use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CountryResource extends Resource
 {
@@ -105,7 +103,8 @@ class CountryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\StatesRelationManager::class,
+            RelationManagers\EmployeesRelationManager::class,
         ];
     }
 

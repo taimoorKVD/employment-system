@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\{Factories\HasFactory, Model, Relations\HasMany};
 
 class Department extends Model
 {
@@ -13,7 +12,7 @@ class Department extends Model
         'name'
     ];
 
-    public function employees(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function employees(): HasMany
     {
         return $this->hasMany(Employee::class);
     }
