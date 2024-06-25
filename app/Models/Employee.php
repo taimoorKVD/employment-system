@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\{Factories\HasFactory, Model, Relations\BelongsTo};
+use Filament\Facades\Filament;
 
 class Employee extends Model
 {
@@ -27,6 +28,11 @@ class Employee extends Model
 
     public function department(): BelongsTo
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsTo(Department::class)->where('team_id', Filament::getTenant()->id);
+    }
+
+    public function teams(): BelongsTo
+    {
+        return $this->belongsTo(Team::class, 'team_id', 'id');
     }
 }

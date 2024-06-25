@@ -2,9 +2,13 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Tenancy\EditTeamProfile;
+use App\Filament\Pages\Tenancy\RegisterTeam;
+use App\Models\Team;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -37,6 +41,12 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->font('Inter')
             ->favicon(asset('images/favicon.png'))
+            ->navigationGroups([
+                'User Management',
+                'Employee Management',
+                'Department Management',
+                'Region Management'
+            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -44,8 +54,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-//                Widgets\AccountWidget::class,
-//                Widgets\FilamentInfoWidget::class,
+                Widgets\AccountWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -60,6 +69,16 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->tenant(Team::class, slugAttribute: 'slug', ownershipRelationship: 'teams')
+            ->tenantRegistration(RegisterTeam::class)
+            ->tenantProfile(EditTeamProfile::class)
+            ->profile()
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Dashboard')
+                    ->icon('heroicon-o-cog-6-tooth')
+                    ->url('/admin')
             ]);
     }
 }

@@ -7,14 +7,16 @@ use App\Filament\Resources\EmployeeResource\RelationManagers;
 use App\Models\City;
 use App\Models\Employee;
 use App\Models\State;
+use App\Models\Team;
 use Carbon\Carbon;
 use Exception;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
-use Filament\Resources\Components\Tab;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\Filter;
@@ -22,6 +24,7 @@ use Filament\Tables\Filters\Indicator;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class EmployeeResource extends Resource
@@ -33,6 +36,49 @@ class EmployeeResource extends Resource
     protected static ?string $navigationLabel = 'Employees';
 
     protected static ?string $navigationGroup = 'Employee Management';
+
+    protected static ?string $recordTitleAttribute = 'first_name';
+
+    public static function getGlobalSearchResultTitle(Model $record): string
+    {
+        return "{$record->first_name} {$record->last_name}";
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return [
+            'first_name',
+            'middle_name',
+            'last_name'
+        ];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Country' => $record->country->name
+        ];
+    }
+
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with('country');
+    }
+
+    public static function getCount()
+    {
+        return static::getModel()::where('team_id', Filament::getTenant()->id)->count();
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return self::getCount();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return self::getCount() > 10 ? 'success' : 'info';
+    }
 
     public static function form(Form $form): Form
     {
@@ -114,6 +160,12 @@ class EmployeeResource extends Resource
                                 Forms\Components\TextInput::make('name')
                                     ->required()
                                     ->maxLength(255),
+                                Forms\Components\TextInput::make('team')
+                                    ->label('Team')
+                                    ->default(Filament::getTenant()->name)
+                                    ->readonly(),
+                                Hidden::make('team_id')
+                                    ->default(Filament::getTenant()->id)
                             ])
                             ->required(),
                     ])->columns(2),

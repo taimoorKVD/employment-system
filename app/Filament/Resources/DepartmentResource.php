@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\DepartmentResource\RelationManagers\EmployeesRelationManager;
 use App\Filament\Resources\DepartmentResource\Pages;
 use App\Models\Department;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\Section;
@@ -25,7 +26,31 @@ class DepartmentResource extends Resource
 
     protected static ?string $modelLabel = 'Department';
 
-    protected static ?string $navigationGroup = "System Management";
+    protected static ?string $navigationGroup = "Department Management";
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Total Employees' => $record->employees->count()
+        ];
+    }
+
+    public static function getCount()
+    {
+        return static::getModel()::where('team_id', Filament::getTenant()->id)->count();
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return self::getCount();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return self::getCount() > 10 ? 'success' : 'info';
+    }
 
     protected static ?int $navigationSort = 1;
 
