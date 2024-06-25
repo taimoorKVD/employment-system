@@ -45,7 +45,7 @@ class UserResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $email = 'admin@fp2.com';
+        $email = env('ADMIN_EMAIL');
         $user = auth()->user();
 
         $query = parent::getEloquentQuery()->where('email', '!=', $email);
