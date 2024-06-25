@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Filament\Models\Contracts\HasDefaultTenant;
 use Filament\Models\Contracts\HasTenants;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -34,7 +33,8 @@ class User extends Authenticatable implements HasTenants
         'email',
         'password',
         'email_verified_at',
-        'is_admin'
+        'is_admin',
+        'created_by'
     ];
 
     /**
@@ -56,6 +56,7 @@ class User extends Authenticatable implements HasTenants
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'is_admin' => 'boolean',
+        'created_by' => 'integer'
     ];
 
     public function teams(): BelongsToMany
@@ -71,5 +72,10 @@ class User extends Authenticatable implements HasTenants
     public function canAccessTenant(Model $tenant): bool
     {
         return $this->teams()->whereKey($tenant)->exists();
+    }
+
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
     }
 }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->char('zip_code');
             $table->date('date_of_birth');
             $table->date('date_hired');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('team_id')->constrained()->cascadeOnDelete();
             $table->foreignId('department_id')->constrained()->cascadeOnDelete();
             $table->foreignId('country_id')->constrained()->cascadeOnDelete();

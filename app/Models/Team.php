@@ -42,6 +42,6 @@ class Team extends Model implements HasCurrentTenantLabel
 
     public function getCurrentTenantLabel(): string
     {
-        return 'Active team';
+        return 'Active Project';
     }
 }

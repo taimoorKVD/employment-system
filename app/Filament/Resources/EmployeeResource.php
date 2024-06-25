@@ -7,7 +7,6 @@ use App\Filament\Resources\EmployeeResource\RelationManagers;
 use App\Models\City;
 use App\Models\Employee;
 use App\Models\State;
-use App\Models\Team;
 use Carbon\Carbon;
 use Exception;
 use Filament\Facades\Filament;
@@ -67,7 +66,7 @@ class EmployeeResource extends Resource
 
     public static function getCount()
     {
-        return static::getModel()::where('team_id', Filament::getTenant()->id)->count();
+        return self::getModel()::Count();
     }
 
     public static function getNavigationBadge(): ?string
@@ -82,6 +81,8 @@ class EmployeeResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $logged_user = auth()->user();
+        $current_tenant = Filament::getTenant();
         return $form
             ->schema([
                 Forms\Components\Section::make('User Name')
@@ -153,7 +154,10 @@ class EmployeeResource extends Resource
                             ->required(),
                         Forms\Components\Select::make('department_id')
                             ->label('Department')
-                            ->relationship('department', titleAttribute: 'name')
+                            ->relationship(
+                                name: 'department',
+                                titleAttribute: 'name',
+                            )
                             ->searchable()
                             ->preload()
                             ->createOptionForm([
@@ -162,12 +166,16 @@ class EmployeeResource extends Resource
                                     ->maxLength(255),
                                 Forms\Components\TextInput::make('team')
                                     ->label('Team')
-                                    ->default(Filament::getTenant()->name)
+                                    ->default($current_tenant->name)
                                     ->readonly(),
                                 Hidden::make('team_id')
-                                    ->default(Filament::getTenant()->id)
+                                    ->default($current_tenant->id),
+                                Hidden::make('user_id')
+                                    ->default($logged_user->id)
                             ])
                             ->required(),
+                        Hidden::make('user_id')
+                            ->default($logged_user->id),
                     ])->columns(2),
             ]);
     }
@@ -177,6 +185,7 @@ class EmployeeResource extends Resource
      */
     public static function table(Table $table): Table
     {
+        $is_admin = auth()->user()->is_admin;
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('first_name')
@@ -205,6 +214,12 @@ class EmployeeResource extends Resource
                     ->label('Joined At')
                     ->date()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('createdBy.name')
+                    ->label('Creator')
+                    ->badge()
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->visible($is_admin),
                 Tables\Columns\TextColumn::make('country.name')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

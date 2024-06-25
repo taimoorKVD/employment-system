@@ -2,14 +2,22 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\TeamScope;
 use Illuminate\Database\Eloquent\{Factories\HasFactory, Model, Relations\BelongsTo};
-use Filament\Facades\Filament;
 
 class Employee extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
+
+    /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new TeamScope());
+    }
 
     public function country(): BelongsTo
     {
@@ -28,11 +36,16 @@ class Employee extends Model
 
     public function department(): BelongsTo
     {
-        return $this->belongsTo(Department::class)->where('team_id', Filament::getTenant()->id);
+        return $this->belongsTo(Department::class);
     }
 
     public function teams(): BelongsTo
     {
         return $this->belongsTo(Team::class, 'team_id', 'id');
+    }
+
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

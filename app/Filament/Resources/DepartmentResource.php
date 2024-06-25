@@ -8,12 +8,14 @@ use App\Models\Department;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Infolists\Components\Section;
+use Filament\Forms\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class DepartmentResource extends Resource
@@ -39,7 +41,7 @@ class DepartmentResource extends Resource
 
     public static function getCount()
     {
-        return static::getModel()::where('team_id', Filament::getTenant()->id)->count();
+        return self::getModel()::Count();
     }
 
     public static function getNavigationBadge(): ?string
@@ -56,20 +58,44 @@ class DepartmentResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $logged_user = auth()->user();
+        $current_tenant = Filament::getTenant();
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
+                Section::make('Department Management')
+                    ->description('Put the department information.')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('team_id')
+                            ->label('Project')
+                            ->hint('Active Project')
+                            ->hintIcon('heroicon-m-exclamation-circle')
+                            ->default($current_tenant->name)
+                            ->hiddenOn('edit')
+                            ->readOnly(),
+                        Forms\Components\Hidden::make('team_id')
+                            ->default($current_tenant->id),
+                        Forms\Components\Hidden::make('user_id')
+                            ->default($logged_user->id),
+                    ])->columns(2)
             ]);
     }
 
     public static function table(Table $table): Table
     {
+        $is_admin = auth()->user()->is_admin;
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('createdBy.name')
+                    ->label('Creator')
+                    ->badge()
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->visible($is_admin),
                 Tables\Columns\TextColumn::make('employees_count')
                     ->label('Total Employee')
                     ->counts('employees'),
@@ -87,11 +113,30 @@ class DepartmentResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->successNotification(
+                        Notification::make()
+                            ->warning()
+                            ->title('Department Successfully Updated')
+                            ->body('The department has been successfully updated.')
+                    ),
+                Tables\Actions\DeleteAction::make()
+                    ->successNotification(
+                        Notification::make()
+                            ->danger()
+                            ->title('Department Successfully Deleted')
+                            ->body('The department has been successfully deleted.')
+                    )
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->successNotification(
+                            Notification::make()
+                                ->danger()
+                                ->title('Bulk Deletion Successful')
+                                ->body('The bulk deletion has been successfully completed.')
+                        ),
                 ]),
             ]);
     }
