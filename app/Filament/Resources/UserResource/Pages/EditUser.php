@@ -23,6 +23,6 @@ class EditUser extends EditRecord
         return Notification::make()
             ->warning()
             ->title('User Successfully Updated')
-            ->body('User has been successfully updated.');
+            ->body('The user has been successfully updated.');
     }
 }

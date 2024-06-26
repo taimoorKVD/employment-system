@@ -13,6 +13,11 @@ class DepartmentAdminChart extends ChartWidget
 
     protected static ?int $sort = 2;
 
+    public static function canView(): bool
+    {
+        return auth()->user()->hasPermissionTo('View Dashboard Department Chart');
+    }
+
     protected function getData(): array
     {
         $data = Trend::model(Department::class)
