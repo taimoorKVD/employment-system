@@ -13,6 +13,11 @@ class LatestEmployees extends BaseWidget
 
     protected static ?string $heading = 'Latest Employees';
 
+    public static function canView(): bool
+    {
+        return auth()->user()->hasPermissionTo('View Dashboard Employee Table');
+    }
+
     public function table(Table $table): Table
     {
         $is_admin = auth()->user()->is_admin;

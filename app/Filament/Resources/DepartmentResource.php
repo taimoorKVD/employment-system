@@ -67,13 +67,6 @@ class DepartmentResource extends Resource
                         Forms\Components\TextInput::make('name')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('team_id')
-                            ->label('Project')
-                            ->hint('Active Project')
-                            ->hintIcon('heroicon-m-exclamation-circle')
-                            ->default($current_tenant->name)
-                            ->hiddenOn('edit')
-                            ->readOnly(),
                         Forms\Components\Hidden::make('team_id')
                             ->default($current_tenant->id),
                         Forms\Components\Hidden::make('user_id')

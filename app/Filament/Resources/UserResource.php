@@ -91,23 +91,25 @@ class UserResource extends Resource
                             ->dehydrated(fn($state) => filled($state))
                             ->maxLength(255)
                             ->revealable(),
+                        Forms\Components\Select::make('roles')
+                            ->label('Roles')
+                            ->multiple()
+                            ->relationship(
+                                name: 'roles',
+                                titleAttribute: 'name',
+                                modifyQueryUsing: fn (Builder $query) => $query->where('name', '!=', 'Admin')
+                            )
+                            ->preload(),
+                        Forms\Components\Hidden::make('team_id')
+                            ->default($current_tenant->id),
+                        Forms\Components\Hidden::make('created_by')
+                            ->default($logged_user->id),
                         ToggleButtons::make('is_admin')
                             ->label('Is Admin?')
                             ->boolean()
                             ->default(0)
                             ->inline()
-                            ->visible($is_admin),
-                        Forms\Components\TextInput::make('team_id')
-                            ->label('Project')
-                            ->hint('Active Project')
-                            ->hintIcon('heroicon-m-exclamation-circle')
-                            ->default($current_tenant->name)
-                            ->hiddenOn('edit')
-                            ->readOnly(),
-                        Forms\Components\Hidden::make('team_id')
-                            ->default($current_tenant->id),
-                        Forms\Components\Hidden::make('created_by')
-                            ->default($logged_user->id)
+                            ->visible($is_admin)
                     ])->columns(2)
             ]);
     }

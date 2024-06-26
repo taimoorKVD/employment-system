@@ -15,6 +15,11 @@ class EmployeeAdminChart extends ChartWidget
 
     protected static string $color = 'info';
 
+    public static function canView(): bool
+    {
+        return auth()->user()->hasPermissionTo('View Dashboard Employee Chart');
+    }
+
     protected function getData(): array
     {
         $data = Trend::model(Employee::class)

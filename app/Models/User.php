@@ -14,6 +14,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Filament\Panel;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @property mixed $teams
@@ -24,7 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class User extends Authenticatable implements HasTenants
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.

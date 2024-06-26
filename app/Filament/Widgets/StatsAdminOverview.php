@@ -10,6 +10,11 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class StatsAdminOverview extends BaseWidget
 {
+    public static function canView(): bool
+    {
+        return auth()->user()->hasPermissionTo('View Dashboard Modules Counter');
+    }
+
     protected function getStats(): array
     {
         $employeeCount = Employee::Count();

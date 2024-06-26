@@ -13,6 +13,11 @@ class LatestDepartments extends BaseWidget
 
     protected static ?string $heading = 'Latest Departments';
 
+    public static function canView(): bool
+    {
+        return auth()->user()->hasPermissionTo('View Dashboard Department Table');
+    }
+
     public function table(Table $table): Table
     {
         $is_admin = auth()->user()->is_admin;
