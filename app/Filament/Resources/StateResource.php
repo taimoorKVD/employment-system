@@ -22,6 +22,8 @@ class StateResource extends Resource
 {
     protected static ?string $model = State::class;
 
+    protected static bool $isScopedToTenant = false;
+
     protected static ?string $navigationIcon = 'heroicon-o-building-library';
 
     protected static ?string $navigationLabel = 'State';
@@ -31,6 +33,21 @@ class StateResource extends Resource
     protected static ?string $navigationGroup = "Region Management";
 
     protected static ?int $navigationSort = 2;
+
+    public static function getCount()
+    {
+        return self::getModel()::Count();
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return self::getCount();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return self::getCount() > 10 ? 'success' : 'info';
+    }
 
     public static function form(Form $form): Form
     {

@@ -18,6 +18,8 @@ class CountryResource extends Resource
 {
     protected static ?string $model = Country::class;
 
+    protected static bool $isScopedToTenant = false;
+
     protected static ?string $navigationIcon = 'heroicon-o-flag';
 
     protected static ?string $navigationLabel = 'Country';
@@ -27,6 +29,21 @@ class CountryResource extends Resource
     protected static ?string $navigationGroup = "Region Management";
 
     protected static ?int $navigationSort = 1;
+
+    public static function getCount()
+    {
+        return self::getModel()::Count();
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return self::getCount();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return self::getCount() > 10 ? 'success' : 'info';
+    }
 
     public static function form(Form $form): Form
     {

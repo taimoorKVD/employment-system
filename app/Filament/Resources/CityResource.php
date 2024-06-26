@@ -18,6 +18,8 @@ class CityResource extends Resource
 {
     protected static ?string $model = City::class;
 
+    protected static bool $isScopedToTenant = false;
+
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
     protected static ?string $navigationLabel = 'City';
@@ -27,6 +29,21 @@ class CityResource extends Resource
     protected static ?string $navigationGroup = "Region Management";
 
     protected static ?int $navigationSort = 3;
+
+    public static function getCount()
+    {
+        return self::getModel()::Count();
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return self::getCount();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return self::getCount() > 10 ? 'success' : 'info';
+    }
 
     public static function form(Form $form): Form
     {
