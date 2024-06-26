@@ -5,6 +5,9 @@ namespace App\Models;
 use App\Models\Scopes\TeamScope;
 use Illuminate\Database\Eloquent\{Factories\HasFactory, Model, Relations\BelongsTo};
 
+/**
+ * @method static Count()
+ */
 class Employee extends Model
 {
     use HasFactory;

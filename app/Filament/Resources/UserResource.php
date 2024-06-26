@@ -45,19 +45,10 @@ class UserResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $email = env('ADMIN_EMAIL');
-        $user = auth()->user();
-
-        $query = parent::getEloquentQuery()->where('email', '!=', $email);
-        if ($user->email != $email) {
-            $query
-                ->where('is_admin', '=', 0)
-                ->where('created_by', '=', $user->id);
-        }
-        return $query->latest();
+        return User::associatedUsers();
     }
 
-    public static function getCount()
+    public static function getCount(): int
     {
         return self::getEloquentQuery()->count();
     }

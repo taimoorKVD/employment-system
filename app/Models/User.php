@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Filament\Facades\Filament;
 use Filament\Models\Contracts\HasTenants;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed $is_admin
  * @method static create(array $array)
  * @method static truncate()
+ * @method static associatedUsers()
  */
 class User extends Authenticatable implements HasTenants
 {
@@ -59,6 +61,23 @@ class User extends Authenticatable implements HasTenants
         'is_admin' => 'boolean',
         'created_by' => 'integer'
     ];
+
+    public function scopeAssociatedUsers($query)
+    {
+        $email = env('ADMIN_EMAIL');
+        $loggedUser = auth()->user();
+        $query
+            ->where('email', '!=', $email)
+            ->whereHas('teams', function ($query) {
+                $query->where('team_id', Filament::getTenant()->id);
+            });
+        if ($loggedUser->email != $email) {
+            $query
+                ->where('is_admin', '=', 0)
+                ->where('created_by', $loggedUser->id);
+        }
+        return $query->latest();
+    }
 
     public function teams(): BelongsToMany
     {
