@@ -137,7 +137,7 @@ class DepartmentResource extends Resource
     {
         return $infolist
             ->schema([
-                Section::make('Basic Information')
+                \Filament\Infolists\Components\Section::make('Basic Information')
                     ->schema([
                         TextEntry::make('name'),
                         TextEntry::make('employees_count')
@@ -145,7 +145,7 @@ class DepartmentResource extends Resource
                             ->state(function (Model $model): int {
                                 return $model->employees()->count();
                             }),
-                    ])->columns(2)
+                    ])->columns(2),
             ]);
     }
 
