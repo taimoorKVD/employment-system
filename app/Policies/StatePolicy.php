@@ -11,7 +11,7 @@ class StatePolicy
      */
     public function viewAny(User $user): bool
     {
-        if($user->hasPermissionTo('List State')) {
+        if($user->hasPermissionTo('view-state')) {
             return true;
         }
         return false;
@@ -22,7 +22,7 @@ class StatePolicy
      */
     public function view(User $user): bool
     {
-        if($user->hasPermissionTo('View State')) {
+        if($user->hasPermissionTo('view-state')) {
             return true;
         }
         return false;
@@ -33,7 +33,7 @@ class StatePolicy
      */
     public function create(User $user): bool
     {
-        if($user->hasPermissionTo('Create State')) {
+        if($user->hasPermissionTo('create-state')) {
             return true;
         }
         return false;
@@ -44,7 +44,7 @@ class StatePolicy
      */
     public function update(User $user): bool
     {
-        if($user->hasPermissionTo('Update State')) {
+        if($user->hasPermissionTo('update-state')) {
             return true;
         }
         return false;
@@ -55,7 +55,7 @@ class StatePolicy
      */
     public function delete(User $user): bool
     {
-        if($user->hasPermissionTo('Delete State')) {
+        if($user->hasPermissionTo('delete-state')) {
             return true;
         }
         return false;

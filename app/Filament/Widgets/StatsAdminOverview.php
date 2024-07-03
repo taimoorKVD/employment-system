@@ -12,7 +12,7 @@ class StatsAdminOverview extends BaseWidget
 {
     public static function canView(): bool
     {
-        return auth()->user()->hasPermissionTo('View Dashboard Modules Counter');
+        return auth()->user()->hasPermissionTo('view-modules-counter');
     }
 
     protected function getStats(): array

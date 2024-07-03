@@ -11,7 +11,7 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-        if($user->hasPermissionTo('List User')) {
+        if ($user->hasPermissionTo('view-user')) {
             return true;
         }
         return false;
@@ -22,7 +22,7 @@ class UserPolicy
      */
     public function view(User $user): bool
     {
-        if($user->hasPermissionTo('View User')) {
+        if ($user->hasPermissionTo('view-user')) {
             return true;
         }
         return false;
@@ -33,7 +33,7 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        if($user->hasPermissionTo('Create User')) {
+        if ($user->hasPermissionTo('create-user')) {
             return true;
         }
         return false;
@@ -44,7 +44,7 @@ class UserPolicy
      */
     public function update(User $user): bool
     {
-        if($user->hasPermissionTo('Update User')) {
+        if ($user->hasPermissionTo('update-user')) {
             return true;
         }
         return false;
@@ -55,7 +55,7 @@ class UserPolicy
      */
     public function delete(User $user): bool
     {
-        if($user->hasPermissionTo('Delete User')) {
+        if ($user->hasPermissionTo('delete-user')) {
             return true;
         }
         return false;

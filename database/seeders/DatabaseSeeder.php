@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
@@ -31,47 +30,43 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10),
             'is_admin' => true
         ]);
-
         $role = Role::create(['name' => 'Admin']);
-        $user->assignRole($role);
-
-        $permissions = Permission::insert([
-            ['name' => 'Create City', 'guard_name' => 'web'],
-            ['name' => 'Create Country', 'guard_name' => 'web'],
-            ['name' => 'Create Department', 'guard_name' => 'web'],
-            ['name' => 'Create Employee', 'guard_name' => 'web'],
-            ['name' => 'Create State', 'guard_name' => 'web'],
-            ['name' => 'Create User', 'guard_name' => 'web'],
-            ['name' => 'Delete City', 'guard_name' => 'web'],
-            ['name' => 'Delete Country', 'guard_name' => 'web'],
-            ['name' => 'Delete Department', 'guard_name' => 'web'],
-            ['name' => 'Delete Employee', 'guard_name' => 'web'],
-            ['name' => 'Delete State', 'guard_name' => 'web'],
-            ['name' => 'Delete User', 'guard_name' => 'web'],
-            ['name' => 'List City', 'guard_name' => 'web'],
-            ['name' => 'List Country', 'guard_name' => 'web'],
-            ['name' => 'List Department', 'guard_name' => 'web'],
-            ['name' => 'List Employee', 'guard_name' => 'web'],
-            ['name' => 'List State', 'guard_name' => 'web'],
-            ['name' => 'List User', 'guard_name' => 'web'],
-            ['name' => 'Update City', 'guard_name' => 'web'],
-            ['name' => 'Update Country', 'guard_name' => 'web'],
-            ['name' => 'Update Department', 'guard_name' => 'web'],
-            ['name' => 'Update Employee', 'guard_name' => 'web'],
-            ['name' => 'Update State', 'guard_name' => 'web'],
-            ['name' => 'Update User', 'guard_name' => 'web'],
-            ['name' => 'View City', 'guard_name' => 'web'],
-            ['name' => 'View Country', 'guard_name' => 'web'],
-            ['name' => 'View Dashboard Department Chart', 'guard_name' => 'web'],
-            ['name' => 'View Dashboard Department Table', 'guard_name' => 'web'],
-            ['name' => 'View Dashboard Employee Chart', 'guard_name' => 'web'],
-            ['name' => 'View Dashboard Employee Table', 'guard_name' => 'web'],
-            ['name' => 'View Dashboard Modules Counter', 'guard_name' => 'web'],
-            ['name' => 'View Department', 'guard_name' => 'web'],
-            ['name' => 'View Employee', 'guard_name' => 'web'],
-            ['name' => 'View State', 'guard_name' => 'web'],
-            ['name' => 'View User', 'guard_name' => 'web'],
+        Permission::insert([
+            ['name' => 'create-city', 'guard_name' => 'web'],
+            ['name' => 'create-country', 'guard_name' => 'web'],
+            ['name' => 'create-department', 'guard_name' => 'web'],
+            ['name' => 'create-employee', 'guard_name' => 'web'],
+            ['name' => 'create-state', 'guard_name' => 'web'],
+            ['name' => 'create-user', 'guard_name' => 'web'],
+            ['name' => 'create-task', 'guard_name' => 'web'],
+            ['name' => 'delete-city', 'guard_name' => 'web'],
+            ['name' => 'delete-country', 'guard_name' => 'web'],
+            ['name' => 'delete-department', 'guard_name' => 'web'],
+            ['name' => 'delete-employee', 'guard_name' => 'web'],
+            ['name' => 'delete-state', 'guard_name' => 'web'],
+            ['name' => 'delete-user', 'guard_name' => 'web'],
+            ['name' => 'delete-task', 'guard_name' => 'web'],
+            ['name' => 'update-city', 'guard_name' => 'web'],
+            ['name' => 'update-country', 'guard_name' => 'web'],
+            ['name' => 'update-department', 'guard_name' => 'web'],
+            ['name' => 'update-employee', 'guard_name' => 'web'],
+            ['name' => 'update-state', 'guard_name' => 'web'],
+            ['name' => 'update-user', 'guard_name' => 'web'],
+            ['name' => 'update-task', 'guard_name' => 'web'],
+            ['name' => 'view-city', 'guard_name' => 'web'],
+            ['name' => 'view-country', 'guard_name' => 'web'],
+            ['name' => 'view-department', 'guard_name' => 'web'],
+            ['name' => 'view-employee', 'guard_name' => 'web'],
+            ['name' => 'view-state', 'guard_name' => 'web'],
+            ['name' => 'view-user', 'guard_name' => 'web'],
+            ['name' => 'view-task', 'guard_name' => 'web'],
+            ['name' => 'view-department-chart', 'guard_name' => 'web'],
+            ['name' => 'view-department-table', 'guard_name' => 'web'],
+            ['name' => 'view-employee-chart', 'guard_name' => 'web'],
+            ['name' => 'view-employee-table', 'guard_name' => 'web'],
+            ['name' => 'view-modules-counter', 'guard_name' => 'web'],
         ]);
+        $user->assignRole($role);
         $role->permissions()->sync(Permission::all());
     }
 }

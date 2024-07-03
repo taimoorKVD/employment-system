@@ -28,19 +28,20 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
+            ->path('system')
             ->login()
             ->colors([
                 'danger' => Color::Red,
                 'gray' => Color::Slate,
                 'info' => Color::Blue,
-                'primary' => Color::Indigo,
+                'primary' => Color::Sky,
                 'success' => Color::Emerald,
                 'warning' => Color::Orange,
             ])
             ->font('Inter')
             ->favicon(asset('images/favicon.png'))
             ->navigationGroups([
+                'Task Management',
                 'Employee Management',
                 'Department Management',
                 'User Management',
@@ -63,6 +64,7 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->databaseNotifications()
             ->authMiddleware([
                 Authenticate::class,
             ])
