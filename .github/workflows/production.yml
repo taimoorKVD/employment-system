@@ -1,0 +1,26 @@
+name: Production
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy-master:
+    name: "master branch"
+    if: ${{ github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Push to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          passphrase: ${{ secrets.SERVER_PASSPHRASE }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: cd ${{ secrets.PROJECT_PATH_MASTER }} && git checkout -- . && git pull origin master && composer install --ignore-platform-reqs  && php artisan cache:clear && php artisan optimize:clear && php artisan config:cache
