@@ -3,7 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CountryResource\Pages;
-use App\Filament\Resources\CountryResource\RelationManagers;
+use App\Filament\Resources\CountryResource\RelationManagers\EmployeesRelationManager;
+use App\Filament\Resources\CountryResource\RelationManagers\StatesRelationManager;
 use App\Models\Country;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -120,8 +121,8 @@ class CountryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\StatesRelationManager::class,
-            RelationManagers\EmployeesRelationManager::class,
+            StatesRelationManager::class,
+            EmployeesRelationManager::class,
         ];
     }
 

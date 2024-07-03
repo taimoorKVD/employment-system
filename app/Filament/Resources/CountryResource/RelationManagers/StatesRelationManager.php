@@ -4,14 +4,9 @@ namespace App\Filament\Resources\CountryResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Infolists\Components\Section;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class StatesRelationManager extends RelationManager
 {
@@ -30,7 +25,6 @@ class StatesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('name')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('State Name')
@@ -51,17 +45,6 @@ class StatesRelationManager extends RelationManager
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
-    }
-
-    public function infolist(Infolist $infolist): Infolist
-    {
-        return $infolist
-            ->schema([
-                Section::make('Basic Information')
-                    ->schema([
-                        TextEntry::make('name'),
-                    ])
             ]);
     }
 }
