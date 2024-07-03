@@ -30,6 +30,11 @@ class Team extends Model implements HasCurrentTenantLabel
         return $this->hasMany(Department::class);
     }
 
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
+    }
+
     public function members(): BelongsToMany
     {
         return $this->belongsToMany(User::class);

@@ -11,7 +11,7 @@ class DepartmentPolicy
      */
     public function viewAny(User $user): bool
     {
-        if($user->hasPermissionTo('List Department')) {
+        if($user->hasPermissionTo('view-department')) {
             return true;
         }
         return false;
@@ -22,7 +22,7 @@ class DepartmentPolicy
      */
     public function view(User $user): bool
     {
-        if($user->hasPermissionTo('View Department')) {
+        if($user->hasPermissionTo('view-department')) {
             return true;
         }
         return false;
@@ -33,7 +33,7 @@ class DepartmentPolicy
      */
     public function create(User $user): bool
     {
-        if($user->hasPermissionTo('Create Department')) {
+        if($user->hasPermissionTo('create-department')) {
             return true;
         }
         return false;
@@ -44,7 +44,7 @@ class DepartmentPolicy
      */
     public function update(User $user): bool
     {
-        if($user->hasPermissionTo('Update Department')) {
+        if($user->hasPermissionTo('update-department')) {
             return true;
         }
         return false;
@@ -55,7 +55,7 @@ class DepartmentPolicy
      */
     public function delete(User $user): bool
     {
-        if($user->hasPermissionTo('Delete Department')) {
+        if($user->hasPermissionTo('delete-department')) {
             return true;
         }
         return false;

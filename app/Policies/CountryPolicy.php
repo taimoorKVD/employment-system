@@ -11,7 +11,7 @@ class CountryPolicy
      */
     public function viewAny(User $user): bool
     {
-        if($user->hasPermissionTo('List Country')) {
+        if($user->hasPermissionTo('view-country')) {
             return true;
         }
         return false;
@@ -22,7 +22,7 @@ class CountryPolicy
      */
     public function view(User $user): bool
     {
-        if($user->hasPermissionTo('View Country')) {
+        if($user->hasPermissionTo('view-country')) {
             return true;
         }
         return false;
@@ -33,7 +33,7 @@ class CountryPolicy
      */
     public function create(User $user): bool
     {
-        if($user->hasPermissionTo('Create Country')) {
+        if($user->hasPermissionTo('create-country')) {
             return true;
         }
         return false;
@@ -44,7 +44,7 @@ class CountryPolicy
      */
     public function update(User $user): bool
     {
-        if($user->hasPermissionTo('Update Country')) {
+        if($user->hasPermissionTo('update-country')) {
             return true;
         }
         return false;
@@ -55,7 +55,7 @@ class CountryPolicy
      */
     public function delete(User $user): bool
     {
-        if($user->hasPermissionTo('Delete Country')) {
+        if($user->hasPermissionTo('delete-country')) {
             return true;
         }
         return false;

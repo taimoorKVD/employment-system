@@ -15,7 +15,7 @@ class DepartmentAdminChart extends ChartWidget
 
     public static function canView(): bool
     {
-        return auth()->user()->hasPermissionTo('View Dashboard Department Chart');
+        return auth()->user()->hasPermissionTo('view-department-chart');
     }
 
     protected function getData(): array

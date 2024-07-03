@@ -15,7 +15,7 @@ class LatestEmployees extends BaseWidget
 
     public static function canView(): bool
     {
-        return auth()->user()->hasPermissionTo('View Dashboard Employee Table');
+        return auth()->user()->hasPermissionTo('view-employee-table');
     }
 
     public function table(Table $table): Table

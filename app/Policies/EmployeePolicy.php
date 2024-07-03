@@ -11,7 +11,7 @@ class EmployeePolicy
      */
     public function viewAny(User $user): bool
     {
-        if($user->hasPermissionTo('List Employee')) {
+        if($user->hasPermissionTo('view-employee')) {
             return true;
         }
         return false;
@@ -22,7 +22,7 @@ class EmployeePolicy
      */
     public function view(User $user): bool
     {
-        if($user->hasPermissionTo('View Employee')) {
+        if($user->hasPermissionTo('view-employee')) {
             return true;
         }
         return false;
@@ -33,7 +33,7 @@ class EmployeePolicy
      */
     public function create(User $user): bool
     {
-        if($user->hasPermissionTo('Create Employee')) {
+        if($user->hasPermissionTo('create-employee')) {
             return true;
         }
         return false;
@@ -44,7 +44,7 @@ class EmployeePolicy
      */
     public function update(User $user): bool
     {
-        if($user->hasPermissionTo('Update Employee')) {
+        if($user->hasPermissionTo('update-employee')) {
             return true;
         }
         return false;
@@ -55,7 +55,7 @@ class EmployeePolicy
      */
     public function delete(User $user): bool
     {
-        if($user->hasPermissionTo('Delete Employee')) {
+        if($user->hasPermissionTo('delete-employee')) {
             return true;
         }
         return false;
