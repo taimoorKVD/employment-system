@@ -4,14 +4,14 @@ namespace App\Policies;
 
 use App\Models\User;
 
-class StatePolicy
+class TaskPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        if($user->hasPermissionTo('view-state')) {
+        if ($user->hasPermissionTo('view-task')) {
             return true;
         }
         return false;
@@ -22,7 +22,7 @@ class StatePolicy
      */
     public function view(User $user): bool
     {
-        if($user->hasPermissionTo('view-state')) {
+        if ($user->hasPermissionTo('view-task')) {
             return true;
         }
         return false;
@@ -33,7 +33,7 @@ class StatePolicy
      */
     public function create(User $user): bool
     {
-        if($user->hasPermissionTo('create-state')) {
+        if ($user->hasPermissionTo('create-task')) {
             return true;
         }
         return false;
@@ -44,7 +44,7 @@ class StatePolicy
      */
     public function update(User $user): bool
     {
-        if($user->hasPermissionTo('update-state')) {
+        if ($user->hasPermissionTo('update-task')) {
             return true;
         }
         return false;
@@ -55,7 +55,7 @@ class StatePolicy
      */
     public function delete(User $user): bool
     {
-        if($user->hasPermissionTo('delete-state')) {
+        if ($user->hasPermissionTo('delete-task')) {
             return true;
         }
         return false;

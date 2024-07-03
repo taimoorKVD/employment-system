@@ -15,7 +15,7 @@ class TeamScope implements Scope
     public function apply(Builder $builder, Model $model): void
     {
         $builder->where('team_id', Filament::getTenant()->id);
-        if(auth()->user()->email != env('ADMIN_EMAIL')) {
+        if (auth()->user()->email !== config('constants.admin_email')) {
             $builder->where('user_id', auth()->user()->id);
         }
     }

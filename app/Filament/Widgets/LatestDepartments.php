@@ -15,7 +15,7 @@ class LatestDepartments extends BaseWidget
 
     public static function canView(): bool
     {
-        return auth()->user()->hasPermissionTo('View Dashboard Department Table');
+        return auth()->user()->hasPermissionTo('view-department-table');
     }
 
     public function table(Table $table): Table

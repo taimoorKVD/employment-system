@@ -17,7 +17,7 @@ class EmployeeAdminChart extends ChartWidget
 
     public static function canView(): bool
     {
-        return auth()->user()->hasPermissionTo('View Dashboard Employee Chart');
+        return auth()->user()->hasPermissionTo('view-employee-chart');
     }
 
     protected function getData(): array

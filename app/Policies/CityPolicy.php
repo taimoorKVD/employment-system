@@ -11,7 +11,7 @@ class CityPolicy
      */
     public function viewAny(User $user): bool
     {
-        if($user->hasPermissionTo('List City')) {
+        if($user->hasPermissionTo('view-city')) {
             return true;
         }
         return false;
@@ -22,7 +22,7 @@ class CityPolicy
      */
     public function view(User $user): bool
     {
-        if($user->hasPermissionTo('View City')) {
+        if($user->hasPermissionTo('view-city')) {
             return true;
         }
         return false;
@@ -33,7 +33,7 @@ class CityPolicy
      */
     public function create(User $user): bool
     {
-        if($user->hasPermissionTo('Create City')) {
+        if($user->hasPermissionTo('create-city')) {
             return true;
         }
         return false;
@@ -44,7 +44,7 @@ class CityPolicy
      */
     public function update(User $user): bool
     {
-        if($user->hasPermissionTo('Update City')) {
+        if($user->hasPermissionTo('update-city')) {
             return true;
         }
         return false;
@@ -55,7 +55,7 @@ class CityPolicy
      */
     public function delete(User $user): bool
     {
-        if($user->hasPermissionTo('Delete City')) {
+        if($user->hasPermissionTo('delete-city')) {
             return true;
         }
         return false;
