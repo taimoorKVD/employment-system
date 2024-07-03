@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
 
         $user = User::create([
             'name' => 'Admin',
-            'email' => env('ADMIN_EMAIL'),
+            'email' => config('constants.admin_email'),
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),

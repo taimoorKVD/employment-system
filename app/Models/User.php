@@ -65,7 +65,7 @@ class User extends Authenticatable implements HasTenants
 
     public function scopeAssociatedUsers($query)
     {
-        $email = env('ADMIN_EMAIL');
+        $email = config('constants.admin_email');
         $loggedUser = auth()->user();
         $query
             ->where('email', '!=', $email)
